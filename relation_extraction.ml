@@ -78,8 +78,9 @@ let extract_relation_common dep ord ind_ref modes rec_style =
     let id = ident_of_string (string_of_id oib.mind_typename) in
     (id, [make_mode ind_glb (Some (adapt_mode ind_ref mode))]) 
   ) modes in
-  let eq_modes = [[MSkip;MInput;MOutput]; [MSkip;MOutput;MInput]; 
-                  [MSkip;MInput;MInput]] in
+ (* let eq_modes = [[MSkip;MInput;MOutput]; [MSkip;MOutput;MInput]; 
+                  [MSkip;MInput;MInput]] *)
+(*CD*) let eq_modes = [[MSkip;MInput;MInput]; [MSkip;MInput;MOutput]; [MSkip;MOutput;MInput]; ] in
   let modes = (ident_of_string "eq", eq_modes)::modes in
 
   (* Compilation *)
@@ -103,8 +104,7 @@ let extract_relation_common dep ord ind_ref modes rec_style =
       (str ("Extraction failed: " ^ s))
   in
   let env = Pred.make_ml_funs env in
-  (*Printf.eprintf "%s\n" (pp_extract_env env);*)
-  env
+ env
 
 let extract_relation_miniml dep ord ind_ref modes =
   let env = extract_relation_common dep ord ind_ref modes None in
